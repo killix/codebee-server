@@ -1,10 +1,19 @@
 import User from '../models/user';
 
-export const schema = require('./user.graphql');
+import { resolvers as viewerResolvers } from './viewer';
 
 export interface UserInput {
   name: string;
+  clientMutationId: string;
 }
+
+export interface UpdateUserInput {
+  id: string;
+  name: string;
+  clientMutationId: string;
+}
+
+export const schema = require('./user.graphql');
 
 export const resolvers = {
   Query: {
@@ -15,13 +24,18 @@ export const resolvers = {
     createUser: (_: any, {input}: {input: UserInput}) => {
       const user = new User(input.name);
       user.save();
-      return user;
+      return {
+        user: user,
+        viewer: viewerResolvers.Query.viewer(),
+        clientMutationId: input.clientMutationId
+      };
     },
-    updateUser: (_: any, {id, input}: {id: string, input: UserInput}) => {
+    updateUser: (_: any, {input}: {input: UpdateUserInput}) => {
+      const { id, name } = input;
       const user = User.findById(id);
-      user.name = input.name;
+      user.name = name;
       user.save();
-      return user;
+      return Object.assign({}, user, {clientMutationId: input.clientMutationId});
     },
   }
 };

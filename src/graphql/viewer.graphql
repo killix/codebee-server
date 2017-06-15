@@ -1,0 +1,21 @@
+type Viewer {
+  hello: String!
+  hello2: String!
+}
+
+type UserConnection {
+  edges: [UserEdge]
+}
+
+type UserEdge {
+  node: User
+}
+
+extend type Query {
+  viewer: Viewer!
+}
+
+extend type Viewer {
+  users: [User]
+  users2: UserConnection
+}

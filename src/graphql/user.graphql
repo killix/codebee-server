@@ -1,5 +1,24 @@
 input UserInput {
   name: String!
+  clientMutationId: String!
+}
+
+input UpdateUserInput {
+  id: ID!
+  name: String!
+  clientMutationId: String!
+}
+
+type UserPayload {
+  id: ID!
+  name: String!
+  clientMutationId: String!
+}
+
+type CreateUserPayload {
+  user: User
+  viewer: Viewer
+  clientMutationId: String
 }
 
 type User {
@@ -13,6 +32,6 @@ extend type Query {
 }
 
 extend type Mutation {
-  createUser(input: UserInput): User
-  updateUser(id: ID!, input: UserInput): User
+  createUser(input: UserInput): CreateUserPayload
+  updateUser(input: UpdateUserInput): UserPayload
 }
