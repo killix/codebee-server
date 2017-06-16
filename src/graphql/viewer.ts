@@ -6,9 +6,9 @@ const viewerResolvers = {
   hello: () => 'Hello viewer!',
   hello2: () => 'Hello viewer 2!',
   users: () => userResolvers.Query.users(),
-  users2: () => {
+  users2: async () => {
     return {
-      edges: userResolvers.Query.users().map(user => {
+      edges: (await userResolvers.Query.users()).map(user => {
         return { node: user };
       })
     };

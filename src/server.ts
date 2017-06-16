@@ -1,11 +1,13 @@
 import * as d from 'debug';
 import * as http from 'http';
 
-import app from './app';
+import initializeDb from './env/db';
 
 const debug = d('codebee:server');
 
 function startServer() {
+  const app = require('./app').default;
+
   /**
   * Get port from environment and store in Express.
   */
@@ -88,4 +90,7 @@ function startServer() {
   }
 }
 
-startServer();
+(async function() {
+  await initializeDb();
+  startServer();
+})();

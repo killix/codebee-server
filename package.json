@@ -15,6 +15,7 @@
     "@types/graphql": "^0.9.1",
     "@types/lodash": "^4.14.64",
     "@types/mongoose": "^4.7.14",
+    "@types/mongoose-auto-increment": "^5.0.30",
     "@types/morgan": "^1.7.32",
     "body-parser": "^1.17.2",
     "cookie-parser": "^1.4.3",
@@ -24,7 +25,9 @@
     "graphql-server-express": "^0.8.0",
     "graphql-tools": "^1.0.0",
     "lodash": "^4.17.4",
+    "mockgoose": "^7.3.3",
     "mongoose": "^4.10.4",
+    "mongoose-auto-increment": "^5.0.1",
     "morgan": "^1.8.2"
   },
   "devDependencies": {

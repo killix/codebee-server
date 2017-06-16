@@ -17,25 +17,22 @@ export const schema = require('./user.graphql');
 
 export const resolvers = {
   Query: {
-    users: () => User.allUsers(),
-    user: (_: any, {id}: {id: string}) => User.findById(id)
+    users: async () => (await User.find()).map(u => u.toJSON()),
+    user: async (_: any, {id}: {id: string}) => (await User.findById(id)).toJSON()
   },
   Mutation: {
-    createUser: (_: any, {input}: {input: UserInput}) => {
-      const user = new User(input.name);
-      user.save();
+    createUser: async (_: any, {input}: {input: UserInput}) => {
+      const user = await User.create({ name: input.name });
       return {
-        user: user,
+        user: user.toJSON(),
         viewer: viewerResolvers.Query.viewer(),
         clientMutationId: input.clientMutationId
       };
     },
-    updateUser: (_: any, {input}: {input: UpdateUserInput}) => {
+    updateUser: async (_: any, {input}: {input: UpdateUserInput}) => {
       const { id, name } = input;
-      const user = User.findById(id);
-      user.name = name;
-      user.save();
-      return Object.assign({}, user, {clientMutationId: input.clientMutationId});
+      const user = await User.findByIdAndUpdate(id, { name });
+      return Object.assign(user.toJSON(), { clientMutationId: input.clientMutationId });
     },
   }
 };
