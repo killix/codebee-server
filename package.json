@@ -5,7 +5,8 @@
   "private": true,
   "scripts": {
     "start": "set DEBUG=codebee*&&node ./dist/server.js",
-    "gulp": "gulp"
+    "gulp": "gulp",
+    "test": "jest"
   },
   "dependencies": {
     "@types/base-64": "^0.1.2",
@@ -38,6 +39,7 @@
     "source-map-support": "^0.4.15"
   },
   "devDependencies": {
+    "@types/jest": "^20.0.0",
     "babel-cli": "^6.24.1",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.24.1",
     "babel-preset-env": "^1.5.2",
@@ -49,6 +51,8 @@
     "gulp-nodemon": "^2.2.1",
     "gulp-sourcemaps": "^2.6.0",
     "gulp-typescript": "^3.1.7",
+    "jest": "^20.0.4",
+    "ts-jest": "^20.0.6",
     "typescript": "^2.3.4"
   }
 }
