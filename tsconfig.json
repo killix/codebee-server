@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "noImplicitAny": true,
-    "target": "es6",
+    "target": "ES2017",
     "module": "es6",
     "sourceMap": false,
     "strictNullChecks": true,
@@ -9,7 +9,7 @@
       "./node_modules/@types"
     ],
     "moduleResolution": "node",
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": false
   },
   "include": [
     "src/**/*"

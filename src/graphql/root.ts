@@ -1,4 +1,5 @@
-export const schema = require('./root.graphql');
+import loadSchema from './loadSchema';
+export const schema = loadSchema('root');
 
 export const resolvers = {
   Query: {

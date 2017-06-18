@@ -5,6 +5,9 @@ import { hashPassword } from '../modules/password';
 
 import { resolvers as viewerResolvers } from './viewer';
 
+import loadSchema from './loadSchema';
+export const schema = loadSchema('user');
+
 export interface UserInput {
   name: string;
   clientMutationId: string;
@@ -38,8 +41,6 @@ interface UserMutation {
 }
 
 type UserResolver = Resolver<UserQuery, UserMutation>;
-
-export const schema = require('./user.graphql');
 
 export const resolvers = {
   Query: {

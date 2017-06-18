@@ -3,7 +3,6 @@ import * as bodyParser from 'body-parser';
 import { Router } from 'express';
 import { graphqlExpress, graphiqlExpress } from 'graphql-server-express';
 
-import root from '../graphql/root';
 import schema from '../graphql/schema';
 
 const api = Router();

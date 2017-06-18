@@ -2,6 +2,9 @@ import { merge } from 'lodash';
 
 import { resolvers as userResolvers } from './user';
 
+import loadSchema from './loadSchema';
+export const schema = loadSchema('viewer');
+
 const viewerResolvers = {
   hello: () => 'Hello viewer!',
   hello2: () => 'Hello viewer 2!',
@@ -14,8 +17,6 @@ const viewerResolvers = {
     };
   }
 };
-
-export const schema = require('./viewer.graphql');
 
 export const resolvers = {
   Query: {

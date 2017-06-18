@@ -1,10 +1,10 @@
-import * as d from 'debug';
 import * as http from 'http';
 
+import logger from './env/debug';
 import env from './env/env';
 import initializeDb from './env/db';
 
-const debug = d('codebee:server');
+const debug = logger('server');
 
 function startServer() {
   const app = require('./app').default;
@@ -91,7 +91,17 @@ function startServer() {
   }
 }
 
+function setup() {
+  require('source-map-support').install();
+
+  // Catch all unhandled promise rejections and log error
+  process.on('unhandledRejection', (error: Error) => {
+    console.error(error);
+  });
+}
+
 (async function() {
+  setup();
   await initializeDb();
   startServer();
 })();

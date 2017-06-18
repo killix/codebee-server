@@ -1,11 +1,11 @@
-import * as d from 'debug';
 import { Mockgoose } from 'mockgoose';
 import * as mongoose from 'mongoose';
-import autoIncrement from 'mongoose-auto-increment';
+import * as autoIncrement from 'mongoose-auto-increment';
 
+import logger from './debug';
 import env from './env';
 
-const debug = d('codebee:mongodb');
+const debug = logger('mongodb');
 
 export default async function initialize() {
   const uri = env.MONGODB;
