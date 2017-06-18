@@ -6,7 +6,8 @@
   "scripts": {
     "start": "set DEBUG=codebee*&&node ./dist/server.js",
     "gulp": "gulp",
-    "test": "jest"
+    "test": "jest",
+    "test:watch": "npm test -- --watch"
   },
   "dependencies": {
     "@types/base-64": "^0.1.2",

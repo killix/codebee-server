@@ -43,7 +43,7 @@ gulp.task('watch', ['compile'], () => {
   });
 });
 
-gulp.task('compile-watch', ['compile'], () => {
+gulp.task('compile:watch', ['compile'], () => {
   gulp.watch('src/**/*', ['compile']);
 });
 
