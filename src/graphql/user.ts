@@ -1,4 +1,7 @@
+import { omit } from 'lodash';
+
 import User from '../models/user';
+import { hashPassword } from '../modules/password';
 
 import { resolvers as viewerResolvers } from './viewer';
 
@@ -12,6 +15,29 @@ export interface UpdateUserInput {
   name: string;
   clientMutationId: string;
 }
+
+export interface RegisterUserInput {
+  name: string;
+  email: string;
+  username: string;
+  password: string;
+  clientMutationId?: string;
+}
+
+interface Resolver<Q, M> {
+  Query: Q
+  Mutation: M
+}
+
+interface UserQuery {
+
+}
+
+interface UserMutation {
+
+}
+
+type UserResolver = Resolver<UserQuery, UserMutation>;
 
 export const schema = require('./user.graphql');
 
@@ -32,7 +58,22 @@ export const resolvers = {
     updateUser: async (_: any, {input}: {input: UpdateUserInput}) => {
       const { id, name } = input;
       const user = await User.findByIdAndUpdate(id, { name });
-      return Object.assign(user.toJSON(), { clientMutationId: input.clientMutationId });
+      return {
+        user: user.toJSON(),
+        clientMutationId: input.clientMutationId
+      };
     },
+    // Registration
+    registerUser: async(_: any, {input}: {input: RegisterUserInput}) => {
+      const doc = Object.assign(
+        { password: await hashPassword(input.password) },
+        omit(input, 'clientMutationId')
+      );
+      const user = await User.create(doc);
+      return {
+        user: user.toJSON(),
+        clientMutationId: input.clientMutationId
+      };
+    }
   }
 };

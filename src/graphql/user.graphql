@@ -1,18 +1,22 @@
+type User implements Node {
+  id: ID!
+  name: String!
+}
+
 input UserInput {
   name: String!
-  clientMutationId: String!
+  clientMutationId: String
 }
 
 input UpdateUserInput {
   id: ID!
   name: String!
-  clientMutationId: String!
+  clientMutationId: String
 }
 
 type UserPayload {
-  id: ID!
-  name: String!
-  clientMutationId: String!
+  user: User
+  clientMutationId: String
 }
 
 type CreateUserPayload {
@@ -21,9 +25,13 @@ type CreateUserPayload {
   clientMutationId: String
 }
 
-type User {
-  id: ID!
+# Registration
+input RegisterUserInput {
   name: String!
+  email: String!
+  username: String!
+  password: String!
+  clientMutationId: String
 }
 
 extend type Query {
@@ -32,6 +40,10 @@ extend type Query {
 }
 
 extend type Mutation {
+  # Tests
   createUser(input: UserInput): CreateUserPayload
   updateUser(input: UpdateUserInput): UserPayload
+
+  # Account management
+  registerUser(input: RegisterUserInput): UserPayload
 }

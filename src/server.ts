@@ -1,6 +1,7 @@
 import * as d from 'debug';
 import * as http from 'http';
 
+import env from './env/env';
 import initializeDb from './env/db';
 
 const debug = d('codebee:server');
