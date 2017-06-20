@@ -32,10 +32,6 @@ gulp.task('compile', ['graphql'], () => {
 
 gulp.task('watch', ['compile'], () => {
   return nodemon({
-    env: {
-      NODE_ENV: 'development',
-      DEBUG: 'codebee:*'
-    },
     script: path.resolve(DEST, 'server.js'),
     tasks: ['compile'],
     ext: 'ts graphql',

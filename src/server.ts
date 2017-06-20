@@ -1,8 +1,8 @@
 import * as http from 'http';
 
-import logger from './env/debug';
 import env from './env/env';
-import initializeDb from './env/db';
+import { initialize as initializeDb } from './env/db';
+import logger from './env/debug';
 
 const debug = logger('server');
 
@@ -13,7 +13,7 @@ function startServer() {
   * Get port from environment and store in Express.
   */
 
-  const port = normalizePort(process.env.PORT || '3000');
+  const port = normalizePort(env.PORT);
   app.set('port', port);
 
   /**
@@ -102,6 +102,6 @@ function setup() {
 
 (async function() {
   setup();
-  await initializeDb();
+  await initializeDb(true);
   startServer();
 })();

@@ -7,15 +7,18 @@ import env from './env';
 
 const debug = logger('mongodb');
 
-export default async function initialize() {
-  const uri = env.MONGODB;
+export let mockgoose: Mockgoose;
+
+export async function initialize(mock = false) {
+  const uri = env.MONGO_URI;
 
   try {
-    if (env.MOCKDB) {
-      const mockgoose = new Mockgoose(mongoose);
+    if (mock) {
+      mockgoose = new Mockgoose(mongoose);
       await mockgoose.prepareStorage();
       debug('Using mock database with mockgoose');
     }
+
     (mongoose as any).Promise = global.Promise;
     await mongoose.connect(uri);
   } catch (e) {

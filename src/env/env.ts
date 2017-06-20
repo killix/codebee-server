@@ -1,6 +1,12 @@
-const env = {
-  MOCKDB: true,
-  MONGODB: process.env['MONGODB']
-};
+import * as dotenv from 'dotenv';
 
-export default env;
+interface EnvironmentVars {
+  NODE_ENV: string;
+  DEBUG: string;
+  MONGO_URI: string;
+  PORT: string;
+}
+
+dotenv.config();
+
+export default process.env as EnvironmentVars;
