@@ -1,7 +1,6 @@
 import { omit } from 'lodash';
 
 import User from '../models/user';
-import { hashPassword } from '../modules/password';
 
 import { resolvers as viewerResolvers } from './viewer';
 
@@ -66,11 +65,7 @@ export const resolvers = {
     },
     // Registration
     registerUser: async(_: any, {input}: {input: RegisterUserInput}) => {
-      const doc = Object.assign(
-        { password: await hashPassword(input.password) },
-        omit(input, 'clientMutationId')
-      );
-      const user = await User.create(doc);
+      const user = await User.register(input);
       return {
         user: user.toJSON(),
         clientMutationId: input.clientMutationId
