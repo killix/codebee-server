@@ -1,11 +1,9 @@
-import loadSchema from './loadSchema';
-export const schema = loadSchema('root');
+import Resolvers from './Resolvers';
 
-export const resolvers = {
-  Query: {
-    hello: () => 'Hello!'
-  },
-  Mutation: {
-    hello: () => 'Hello!'
-  }
-};
+Resolvers.extendQuery({
+  hello: () => 'Hello!'
+});
+
+Resolvers.extendMutation({
+  hello: () => 'Hello!'
+});

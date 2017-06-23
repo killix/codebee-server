@@ -1,5 +1,6 @@
 import * as mongoose from 'mongoose';
 import { Document, Model, Schema } from 'mongoose';
+import { plugin as autoIncrement } from 'mongoose-auto-increment';
 
 import { hashPassword, validatePassword } from '../modules/password';
 
@@ -54,6 +55,11 @@ const schema = new Schema({
   email: String,
   username: String,
   password: String
+});
+
+schema.plugin(autoIncrement, {
+  model: 'User',
+  startAt: 1
 });
 
 schema.set('toJSON', {

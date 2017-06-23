@@ -1,21 +1,15 @@
 type Viewer {
-  hello: String!
-  hello2: String!
+  users: UserConnection!
 }
 
-type UserConnection {
-  edges: [UserEdge]
+type UserConnection implements Connection {
+  edges: [UserEdge]!
 }
 
-type UserEdge {
-  node: User
+type UserEdge implements Edge {
+  node: User!
 }
 
 extend type Query {
   viewer: Viewer!
-}
-
-extend type Viewer {
-  users: [User]
-  users2: UserConnection
 }

@@ -1,25 +1,13 @@
-import { merge } from 'lodash';
+import { buildEdges } from './graphql-helpers';
+import Resolvers from './Resolvers';
+import User from './user';
 
-import { resolvers as userResolvers } from './user';
-
-import loadSchema from './loadSchema';
-export const schema = loadSchema('viewer');
-
-const viewerResolvers = {
-  hello: () => 'Hello viewer!',
-  hello2: () => 'Hello viewer 2!',
-  users: () => userResolvers.Query.users(),
-  users2: async () => {
-    return {
-      edges: (await userResolvers.Query.users()).map(user => {
-        return { node: user };
-      })
-    };
-  }
+const query = {
+  users: async () => buildEdges(await User.users())
 };
 
-export const resolvers = {
-  Query: {
-    viewer: () => viewerResolvers // merge.call(null, viewerResolvers, userResolvers.Query)
-  }
-};
+Resolvers.extendQuery({
+  viewer: () => query
+});
+
+export default query;

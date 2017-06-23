@@ -3,11 +3,6 @@ type User implements Node {
   name: String!
 }
 
-input UserInput {
-  name: String!
-  clientMutationId: String
-}
-
 input UpdateUserInput {
   id: ID!
   name: String!
@@ -16,12 +11,6 @@ input UpdateUserInput {
 
 type UserPayload {
   user: User
-  clientMutationId: String
-}
-
-type CreateUserPayload {
-  user: User
-  viewer: Viewer
   clientMutationId: String
 }
 
@@ -35,15 +24,11 @@ input RegisterUserInput {
 }
 
 extend type Query {
-  user(id: ID!): User
-  users: [User]!
+  # user(id: ID!): User
+  # users: [User]
 }
 
 extend type Mutation {
-  # Tests
-  createUser(input: UserInput): CreateUserPayload
   updateUser(input: UpdateUserInput): UserPayload
-
-  # Account management
   registerUser(input: RegisterUserInput): UserPayload
 }

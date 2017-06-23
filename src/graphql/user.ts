@@ -2,74 +2,55 @@ import { omit } from 'lodash';
 
 import User from '../models/user';
 
-import { resolvers as viewerResolvers } from './viewer';
+import { toGlobalObject, mutationResult, fromGlobalObject } from './graphql-helpers';
+import { QResolver0, QResolver2, MResolver2 } from './graphql-types';
+import Resolvers from './Resolvers';
 
-import loadSchema from './loadSchema';
-export const schema = loadSchema('user');
-
-export interface UserInput {
-  name: string;
-  clientMutationId: string;
-}
-
-export interface UpdateUserInput {
+interface UpdateUserInput {
   id: string;
   name: string;
-  clientMutationId: string;
 }
 
-export interface RegisterUserInput {
+interface RegisterUserInput {
   name: string;
   email: string;
   username: string;
   password: string;
-  clientMutationId?: string;
-}
-
-interface Resolver<Q, M> {
-  Query: Q
-  Mutation: M
 }
 
 interface UserQuery {
-
+  users: QResolver0<object[]>;
+  user: QResolver2<any, { id: string }, object>;
 }
 
 interface UserMutation {
-
+  updateUser: MResolver2<any, UpdateUserInput, object>;
+  registerUser: MResolver2<any, RegisterUserInput, object>;
 }
 
-type UserResolver = Resolver<UserQuery, UserMutation>;
+const NAME = 'User';
 
-export const resolvers = {
-  Query: {
-    users: async () => (await User.find()).map(u => u.toJSON()),
-    user: async (_: any, {id}: {id: string}) => (await User.findById(id)).toJSON()
+const query: UserQuery = {
+  users: async () => (await User.find()).map(u => toGlobalObject(NAME, u.toJSON())),
+  user: async (_, { id }) => toGlobalObject(NAME, (await User.findById(id)).toJSON())
+};
+
+const mutation: UserMutation = {
+  updateUser: async (_, { input }) => {
+    const { id, name } = fromGlobalObject(input);
+    const user = await User.findByIdAndUpdate(id, { name }, { new: true });
+    return mutationResult(input, {
+      user: toGlobalObject(NAME, user.toJSON())
+    });
   },
-  Mutation: {
-    createUser: async (_: any, {input}: {input: UserInput}) => {
-      const user = await User.create({ name: input.name });
-      return {
-        user: user.toJSON(),
-        viewer: viewerResolvers.Query.viewer(),
-        clientMutationId: input.clientMutationId
-      };
-    },
-    updateUser: async (_: any, {input}: {input: UpdateUserInput}) => {
-      const { id, name } = input;
-      const user = await User.findByIdAndUpdate(id, { name });
-      return {
-        user: user.toJSON(),
-        clientMutationId: input.clientMutationId
-      };
-    },
-    // Registration
-    registerUser: async(_: any, {input}: {input: RegisterUserInput}) => {
-      const user = await User.register(input);
-      return {
-        user: user.toJSON(),
-        clientMutationId: input.clientMutationId
-      };
-    }
+  registerUser: async (_, { input }) => {
+    const user = await User.register(input);
+    return mutationResult(input, {
+      user: toGlobalObject(NAME, user.toJSON()),
+    });
   }
 };
+
+Resolvers.extendMutation(mutation);
+
+export default query;
