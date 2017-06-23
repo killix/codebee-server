@@ -3,6 +3,14 @@ type User implements Node {
   name: String!
 }
 
+type UserConnection implements Connection {
+  edges: [UserEdge]!
+}
+
+type UserEdge implements Edge {
+  node: User!
+}
+
 input UpdateUserInput {
   id: ID!
   name: String!
@@ -14,18 +22,12 @@ type UserPayload {
   clientMutationId: String
 }
 
-# Registration
 input RegisterUserInput {
   name: String!
   email: String!
   username: String!
   password: String!
   clientMutationId: String
-}
-
-extend type Query {
-  # user(id: ID!): User
-  # users: [User]
 }
 
 extend type Mutation {

@@ -2,14 +2,6 @@ type Viewer {
   users: UserConnection!
 }
 
-type UserConnection implements Connection {
-  edges: [UserEdge]!
-}
-
-type UserEdge implements Edge {
-  node: User!
-}
-
 extend type Query {
   viewer: Viewer!
 }
