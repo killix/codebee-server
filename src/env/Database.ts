@@ -1,16 +1,21 @@
+import { isUndefined } from 'lodash';
 import { Mockgoose } from 'mockgoose';
 import * as mongoose from 'mongoose';
 import * as autoIncrement from 'mongoose-auto-increment';
 
-import logger from './debug';
-import env from './env';
+import logger from './logger';
+import Environment, { isTest } from './Environment';
 
 const debug = logger('mongodb');
 
 export let mockgoose: Mockgoose;
 
-export async function initialize(mock = false) {
-  const uri = env.MONGO_URI;
+export async function initialize(mock?: boolean) {
+  const uri = Environment.MONGO_URI;
+
+  if (isUndefined(mock)) {
+    mock = isTest() || Environment.MOCK_DB == 'true';
+  }
 
   try {
     if (mock) {

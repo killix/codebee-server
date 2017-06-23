@@ -1,7 +1,7 @@
-import { mockgoose, initialize } from '../env/db';
+import { mockgoose, initialize } from '../env/Database';
 
 export async function setupDb() {
-  await initialize(true);
+  await initialize();
   await clearDb();
 }
 

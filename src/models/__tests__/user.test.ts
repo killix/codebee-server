@@ -1,7 +1,7 @@
 import { pick } from 'lodash';
 
-import { setupTest, clearDatabase } from '../../test/helper';
-import { User, UserClass, UserModel, LoginError } from '../user';
+import { setupTest, clearDatabase } from '../../test/TestUtils';
+import { User, UserClass, UserModel, LoginError } from '../User';
 
 const users: UserModel[] = [];
 

@@ -4,8 +4,8 @@ import * as glob from 'glob';
 import * as path from 'path';
 import gql from 'graphql-tag';
 
-import logger from '../env/debug';
-import { RelayMutation } from './graphql-types';
+import logger from '../env/logger';
+import { RelayMutation } from './GraphQLTypes';
 
 const debug = logger('graphql');
 

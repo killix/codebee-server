@@ -1,10 +1,10 @@
 import { Router } from 'express';
 
-import graphql from './graphql';
+import GraphQL from './GraphQL';
 
 const router = Router();
 
-router.use('/', graphql);
+router.use('/', GraphQL);
 
 // send index.html
 // router.get('/*', (req, res) => {

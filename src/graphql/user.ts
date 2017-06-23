@@ -1,9 +1,9 @@
 import { omit } from 'lodash';
 
-import User from '../models/user';
+import User from '../models/User';
 
-import { toGlobalObject, mutationResult, fromGlobalObject } from './graphql-helpers';
-import { QResolver0, QResolver2, MResolver2 } from './graphql-types';
+import { toGlobalObject, mutationResult, fromGlobalObject } from './GraphQLHelpers';
+import { QResolver0, QResolver2, MResolver2 } from './GraphQLTypes';
 import Resolvers from './Resolvers';
 
 interface UpdateUserInput {

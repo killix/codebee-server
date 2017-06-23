@@ -1,4 +1,4 @@
-import { clearDb, setupDb } from './db';
+import { clearDb, setupDb } from './Database';
 
 export async function setupTest() {
   await setupDb();

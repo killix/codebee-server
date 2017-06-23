@@ -1,8 +1,8 @@
 import * as mongoose from 'mongoose';
 import { Document, Model, Schema } from 'mongoose';
-import { plugin as autoIncrement } from 'mongoose-auto-increment';
 
-import { hashPassword, validatePassword } from '../modules/password';
+import { setupSchema, autoIncrement } from './ModelUtils';
+import { hashPassword, validatePassword } from '../modules/Password';
 
 export class LoginError extends Error {
   constructor() {
@@ -57,20 +57,8 @@ const schema = new Schema({
   password: String
 });
 
-schema.plugin(autoIncrement, {
-  model: 'User',
-  startAt: 1
-});
-
-schema.set('toJSON', {
-  id: true,
-  getters: true,
-  versionKey: false,
-  transform: (_: any, ret: Document) => {
-    delete ret._id;
-    return ret;
-  }
-});
+setupSchema(schema);
+autoIncrement('User', schema);
 
 schema.loadClass(UserClass);
 schema.loadClass(UserStatic);

@@ -1,6 +1,6 @@
-import { buildEdges } from './graphql-helpers';
+import { buildEdges } from './GraphQLHelpers';
 import Resolvers from './Resolvers';
-import User from './user';
+import User from './User';
 
 const query = {
   users: async () => buildEdges(await User.users())

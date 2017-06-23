@@ -1,9 +1,13 @@
 import Resolvers from './Resolvers';
 
-Resolvers.extendQuery({
+const query = {
   hello: () => 'Hello!'
-});
+};
+
+Resolvers.extendQuery(query);
 
 Resolvers.extendMutation({
   hello: () => 'Hello!'
 });
+
+export default query;

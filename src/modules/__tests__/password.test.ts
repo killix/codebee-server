@@ -1,6 +1,6 @@
 import { range } from 'lodash';
 
-import * as password from '../password';
+import * as password from '../Password';
 
 const PASSWORD = 'abc123';
 
