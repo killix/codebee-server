@@ -18,19 +18,10 @@ input UpdateUserInput {
 }
 
 type UserPayload {
-  user: User
-  clientMutationId: String
-}
-
-input RegisterUserInput {
-  name: String!
-  email: String!
-  username: String!
-  password: String!
+  user: User!
   clientMutationId: String
 }
 
 extend type Mutation {
   updateUser(input: UpdateUserInput!): UserPayload!
-  registerUser(input: RegisterUserInput!): UserPayload!
 }

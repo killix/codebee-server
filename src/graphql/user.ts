@@ -11,13 +11,6 @@ interface UpdateUserInput {
   name: string;
 }
 
-interface RegisterUserInput {
-  name: string;
-  email: string;
-  username: string;
-  password: string;
-}
-
 interface UserQuery {
   users: QResolver<void, object[]>;
   user: QResolver<{ id: string }, object>;
@@ -25,7 +18,6 @@ interface UserQuery {
 
 interface UserMutation {
   updateUser: MResolver<UpdateUserInput, object>;
-  registerUser: MResolver<RegisterUserInput, object>;
 }
 
 const NAME = User.modelName;
@@ -41,12 +33,6 @@ const mutation: UserMutation = {
     const user = await User.findByIdAndUpdate(id, { name }, { new: true });
     return mutationResult(input, {
       user: toGlobalObject(NAME, user.toJSON())
-    });
-  },
-  registerUser: async (_, { input }) => {
-    const user = await User.register(input);
-    return mutationResult(input, {
-      user: toGlobalObject(NAME, user.toJSON()),
     });
   }
 };

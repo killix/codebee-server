@@ -11,6 +11,7 @@ export class LoginError extends Error {
 }
 
 interface UserStatic {
+  guest(): UserModel;
   findByUsername(username: string): Promise<UserModel>;
   findByEmail(email: string): Promise<UserModel>;
   register(user: UserClass): Promise<UserModel>;
@@ -18,6 +19,12 @@ interface UserStatic {
 }
 
 class UserStatic {
+  static guest() {
+    return new User({
+      name: 'Guest'
+    });
+  }
+
   static async findByUsername(username: string) {
     return await User.findOne({ username });
   }

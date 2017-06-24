@@ -1,3 +1,5 @@
+import { once } from 'lodash';
+import { GraphQLSchema } from 'graphql';
 import { makeExecutableSchema } from 'graphql-tools';
 
 import { loadSchemas } from './GraphQLHelpers';
@@ -8,8 +10,17 @@ import './Root';
 import './User';
 import './Viewer';
 
-export default () => makeExecutableSchema({
-  typeDefs: loadSchemas(),
-  resolvers: Resolvers.getResolvers(),
-  allowUndefinedInResolve: false
+let schema: GraphQLSchema;
+
+const makeSchema = once(() => {
+  schema = makeExecutableSchema({
+    typeDefs: loadSchemas(),
+    resolvers: Resolvers.getResolvers(),
+    allowUndefinedInResolve: false
+  });
 });
+
+export default function getSchema() {
+  makeSchema();
+  return schema;
+}

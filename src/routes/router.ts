@@ -1,9 +1,11 @@
 import { Router } from 'express';
+import * as helmet from 'helmet';
 
 import GraphQL from './GraphQL';
 
 const router = Router();
 
+router.use(helmet());
 router.use('/', GraphQL);
 
 // send index.html

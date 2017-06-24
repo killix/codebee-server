@@ -1,15 +1,24 @@
+input RegisterInput {
+  name: String!
+  email: String!
+  username: String!
+  password: String!
+  clientMutationId: String
+}
+
 input LoginInput {
   email: String!
   password: String!
   clientMutationId: String
 }
 
-type LoginPayload {
+type AuthPayload {
   user: User!
-  token: String!
+  token: String
   clientMutationId: String
 }
 
 extend type Mutation {
-  login(input: LoginInput!): LoginPayload!
+  register(input: RegisterInput!): AuthPayload!
+  login(input: LoginInput!): AuthPayload!
 }
