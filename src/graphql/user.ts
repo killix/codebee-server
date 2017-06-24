@@ -3,7 +3,7 @@ import { omit } from 'lodash';
 import User from '../models/User';
 
 import { toGlobalObject, mutationResult, fromGlobalObject } from './GraphQLHelpers';
-import { QResolver0, QResolver2, MResolver2 } from './GraphQLTypes';
+import { QResolver, MResolver } from './GraphQLTypes';
 import Resolvers from './Resolvers';
 
 interface UpdateUserInput {
@@ -19,19 +19,19 @@ interface RegisterUserInput {
 }
 
 interface UserQuery {
-  users: QResolver0<object[]>;
-  user: QResolver2<any, { id: string }, object>;
+  users: QResolver<void, object[]>;
+  user: QResolver<{ id: string }, object>;
 }
 
 interface UserMutation {
-  updateUser: MResolver2<any, UpdateUserInput, object>;
-  registerUser: MResolver2<any, RegisterUserInput, object>;
+  updateUser: MResolver<UpdateUserInput, object>;
+  registerUser: MResolver<RegisterUserInput, object>;
 }
 
-const NAME = 'User';
+const NAME = User.modelName;
 
 const query: UserQuery = {
-  users: async () => (await User.find()).map(u => toGlobalObject(NAME, u.toJSON())),
+  users: async (_, args, context) => (await User.find()).map(u => toGlobalObject(NAME, u.toJSON())),
   user: async (_, { id }) => toGlobalObject(NAME, (await User.findById(id)).toJSON())
 };
 

@@ -52,8 +52,14 @@ type UserType = UserClass & UserStatic & Model<UserModel>;
 
 const schema = new Schema({
   name: String,
-  email: String,
-  username: String,
+  email: {
+    type: String,
+    unique: true
+  },
+  username: {
+    type: String,
+    unique: true
+  },
   password: String
 });
 

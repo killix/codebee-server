@@ -6,6 +6,7 @@ interface EnvironmentVars {
   MONGO_URI: string;
   PORT: string;
   MOCK_DB: string;
+  JWT_SECRET: string;
 }
 
 dotenv.config();
@@ -20,6 +21,10 @@ export function isDev() {
 
 export function isProd() {
   return process.env.NODE_ENV == 'production';
+}
+
+export function setEnv(key: string, value: string) {
+  process.env[key] = value;
 }
 
 export default process.env as EnvironmentVars;

@@ -45,9 +45,9 @@ export function fromGlobalObject<T extends any>(input: T): T {
   });
 }
 
-export function mutationResult<T extends object>(input: RelayMutation, result: object): RelayMutation & object {
+export function mutationResult<T extends object>(input: RelayMutation, result: T): RelayMutation & T {
   return Object.assign({}, result, {
-    input: input.clientMutationId
+    clientMutationId: input.clientMutationId
   });
 }
 

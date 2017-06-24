@@ -3,6 +3,7 @@ import { makeExecutableSchema } from 'graphql-tools';
 import { loadSchemas } from './GraphQLHelpers';
 import Resolvers from './Resolvers';
 
+import './Auth';
 import './Root';
 import './User';
 import './Viewer';

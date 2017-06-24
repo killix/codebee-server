@@ -31,6 +31,6 @@ input RegisterUserInput {
 }
 
 extend type Mutation {
-  updateUser(input: UpdateUserInput): UserPayload
-  registerUser(input: RegisterUserInput): UserPayload
+  updateUser(input: UpdateUserInput!): UserPayload!
+  registerUser(input: RegisterUserInput!): UserPayload!
 }

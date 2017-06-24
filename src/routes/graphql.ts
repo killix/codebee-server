@@ -2,6 +2,7 @@ import * as bodyParser from 'body-parser';
 
 import { Router } from 'express';
 import { graphqlExpress, graphiqlExpress } from 'graphql-server-express';
+import * as test from 'graphql-server-core';
 
 import getSchema from '../graphql/getSchema';
 

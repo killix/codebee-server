@@ -1,12 +1,12 @@
-export type QResolver3<O, A, C, R> = (obj: O, args: A, context: C) => Promise<R>;
-export type QResolver2<O, A, R> = (obj: O, args: A) => Promise<R>;
-export type QResolver1<O, R> = (obj: O) => Promise<R>;
-export type QResolver0<R> = () => Promise<R>;
+import { Request, Response } from 'express';
 
-export type MResolver3<O, A, C, R> = QResolver3<O, { input: A }, C, R>;
-export type MResolver2<O, A, R> = QResolver2<O, { input: A }, R>;
-export type MResolver1<O, R> = QResolver1<O, R>;
-export type MResolver0<R> = QResolver0<R>;
+export type QResolver<A, R> = (parent: any, args: A, context: Context) => Promise<R>;
+export type MResolver<A, R> = QResolver<{ input: A }, R>;
+
+export interface Context {
+  req: Request,
+  res: Response
+}
 
 export interface RelayMutation {
   clientMutationId?: string;
