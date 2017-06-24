@@ -1,13 +1,13 @@
 import { pick } from 'lodash';
 
 import { setupTest, clearDatabase } from '../../test/TestUtils';
-import { User, UserClass, UserModel, LoginError } from '../User';
+import { User, UserModel, LoginError } from '../User';
 
 const users: UserModel[] = [];
 
 async function setupUsers() {
   for (let i = 0; i < 3; i++) {
-    const data: UserClass = {
+    const data = {
       name: `user${i}`,
       username: `username${i}`,
       email: `user${i}@example.com`,
@@ -36,7 +36,7 @@ test('find user by email', async () => {
 });
 
 test('register new user', async () => {
-  const doc: UserClass = {
+  const doc = {
     name: 'New User',
     username: 'newusername',
     email: 'newuser@example.com',
@@ -57,4 +57,14 @@ test('return user on correct login', async () => {
 test('throw error on incorrect login', async () => {
   const login = User.login(users[0].email, 'abc123');
   await expect(login).rejects.toBeInstanceOf(LoginError);
+});
+
+test('guest user is not authenticated', () => {
+  const guest = User.guest();
+  expect(guest.isAuthenticated()).toBeFalsy();
+});
+
+test('valid user is authenticated', () => {
+  const user = users[0];
+  expect(user.isAuthenticated()).toBeTruthy();
 });

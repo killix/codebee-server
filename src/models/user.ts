@@ -10,11 +10,18 @@ export class LoginError extends Error {
   }
 }
 
+interface UserRegistration {
+  name: string;
+  email: string;
+  username: string;
+  password: string;
+}
+
 interface UserStatic {
   guest(): UserModel;
   findByUsername(username: string): Promise<UserModel>;
   findByEmail(email: string): Promise<UserModel>;
-  register(user: UserClass): Promise<UserModel>;
+  register(user: UserRegistration): Promise<UserModel>;
   login(email: string, password: string): Promise<UserModel>;
 }
 
@@ -33,7 +40,7 @@ class UserStatic {
     return await User.findOne({ email });
   }
 
-  static async register(user: UserClass) {
+  static async register(user: UserRegistration) {
     user.password = await hashPassword(user.password);
     return await User.create(user);
   }
@@ -52,6 +59,10 @@ export class UserClass {
   email: string;
   username: string;
   password: string;
+
+  isAuthenticated() {
+    return !!this.email;
+  }
 }
 
 export type UserModel = UserClass & Document;
