@@ -12,4 +12,4 @@ DEBUG=codebee*
 MONGO_URI=
 ```
 
-See `env/env.ts` for a list of available options
+See `env/Environment.ts` for a list of available options

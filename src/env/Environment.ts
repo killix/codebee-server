@@ -7,6 +7,7 @@ interface EnvironmentVars {
   PORT: string;
   MOCK_DB: string;
   JWT_SECRET: string;
+  CSRF: string;
 }
 
 dotenv.config();
@@ -23,8 +24,14 @@ export function isProd() {
   return process.env.NODE_ENV == 'production';
 }
 
+export function isEnabled(key: string) {
+  return process.env[key] == 'true';
+}
+
 export function setEnv(key: string, value: string) {
   process.env[key] = value;
 }
 
-export default process.env as EnvironmentVars;
+export const Environment = process.env as EnvironmentVars;
+
+export default Environment;

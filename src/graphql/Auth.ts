@@ -1,6 +1,6 @@
-import Authorization from '../modules/Authorization';
+import Authorization, { TokenPayload } from '../modules/Authorization';
 import User, { UserModel } from '../models/User';
-import { isProd } from '../env/Environment';
+import { isProd, isEnabled } from '../env/Environment';
 
 import { toGlobalObject, mutationResult } from './GraphQLHelpers';
 import { MResolver, RelayMutation } from './GraphQLTypes';
@@ -25,9 +25,15 @@ interface AuthMutation {
 }
 
 async function authPayload(input: RelayMutation, user: UserModel, context: Context) {
-  const token = await Authorization.generateToken({
+  const tokenPayload: TokenPayload = {
     uid: user._id
-  });
+  };
+  if (isEnabled('CSRF')) {
+    const csrf = Authorization.generateCsrfToken();
+    tokenPayload.csrf = csrf;
+    context.setCsrf(csrf);
+  }
+  const token = await Authorization.generateToken(tokenPayload);
   context.setAccessToken(token);
 
   return mutationResult(input, {

@@ -26,6 +26,7 @@
     "@types/mongoose-auto-increment": "^5.0.30",
     "@types/morgan": "^1.7.32",
     "@types/node": "^8.0.1",
+    "@types/uuid": "^3.0.0",
     "base-64": "^0.1.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.17.2",
@@ -44,7 +45,8 @@
     "mongoose": "^4.10.4",
     "mongoose-auto-increment": "^5.0.1",
     "morgan": "^1.8.2",
-    "source-map-support": "^0.4.15"
+    "source-map-support": "^0.4.15",
+    "uuid": "^3.1.0"
   },
   "devDependencies": {
     "@types/jest": "^20.0.0",
